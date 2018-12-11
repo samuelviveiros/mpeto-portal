@@ -397,11 +397,33 @@ class ManageBrickController extends BrickController
 			$aColumnsDefinition = array();
 			foreach ($aColumnsAttrs as $sColumnAttr)
 			{
+				/*
 				$oAttDef = MetaModel::GetAttributeDef($sKey, $sColumnAttr);
 				$aColumnsDefinition[$sColumnAttr] = array(
 					'title' => $oAttDef->GetLabel(),
 					'type' => ($oAttDef instanceof AttributeDateTime) ? 'moment-'.$oAttDef->GetFormat()->ToMomentJS() : 'html', // Special sorting for Date & Time
 				);
+				*/
+				/**** MPETO-BEGIN ****/
+				$oAttDef = MetaModel::GetAttributeDef($sKey, $sColumnAttr);
+				$sTitle = $oAttDef->GetLabel();
+				switch ($sColumnAttr)
+				{
+					case 'friendlyname':
+						$sTitle = Dict::Format('Brick:Portal:UserRequest:friendlyname');
+						break;
+					case 'start_date':
+						$sTitle = Dict::Format('Brick:Portal:UserRequest:start_date');
+						break;
+				}
+				$aColumnsDefinition[$sColumnAttr] = array(
+					'title' => $sTitle,
+					'type' => ($oAttDef instanceof AttributeDateTime) ? 'moment-'.$oAttDef->GetFormat()->ToMomentJS() : 'html', // Special sorting for Date & Time
+				);
+				/***** MPETO-END *****/
+
+				/*'title' => ($sColumnAttr === 'friendlyname' && $sBrickId === 'closed-tickets-for-portal-user') ? Dict::Format('Brick:Portal:UserRequest:friendlyname') : $oAttDef->GetLabel(), // MPETO
+				'title' => ($sColumnAttr === 'friendlyname') ? Dict::Format('Brick:Portal:UserRequest:friendlyname') : $oAttDef->GetLabel(), // MPETO*/
 			}
 
 			// Getting items
