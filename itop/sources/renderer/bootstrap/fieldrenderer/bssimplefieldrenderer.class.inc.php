@@ -126,6 +126,14 @@ EOF
 				case 'Combodo\\iTop\\Form\\Field\\CaseLogField':
 					$bRichEditor = ($this->oField->GetFormat() === TextAreaField::ENUM_FORMAT_HTML);
 
+					//**** MPETO-BEGIN ****
+					// Retraduz o campo 'Mensagens', do formulário de reabertura de chamado, para 'Motivo da reabertura'
+					if ( strpos($this->oField->GetFormPath(), 'objectform-apply_stimulus-UserRequest-ev_reopen') !== false && $this->oField->GetLabel() === 'Mensagens' )
+					{
+						$this->oField->SetLabel("Motivo da reabertura");
+					}
+					//**** MPETO-END ****
+
 					// Opening container
 					$oOutput->AddHtml('<div class="form-group ' . $sFieldMandatoryClass . '">');
 
