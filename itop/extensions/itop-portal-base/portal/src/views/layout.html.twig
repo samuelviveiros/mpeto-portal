@@ -22,7 +22,18 @@
 	{# This block can be used to add your own meta tags by extending the default template #}
 	{% block pPageExtraMetas %}
 	{% endblock %}
-	<title>{% block pPageTitle %}{% if sPageTitle is defined and sPageTitle is not null %}{{ sPageTitle }} - {{ constant('ITOP_APPLICATION') }}{% else %}{{ 'Page:DefaultTitle'|dict_s }}{% endif %}{% endblock %}</title>
+	<title>
+		{% block pPageTitle %}
+			{% if sPageTitle is defined and sPageTitle is not null %}
+				{#{{ sPageTitle }} - {{ constant('ITOP_APPLICATION') }}#}
+				{# MPETO-BEGIN #}
+				{{ sPageTitle }} - DMTI
+				{# MPETO-END #}
+			{% else %}
+				{{ 'Page:DefaultTitle'|dict_s }}
+			{% endif %}
+		{% endblock %}
+	</title>
 	<link rel="shortcut icon" href="{{ app['combodo.absolute_url'] ~ 'images/favicon.ico'|add_itop_version }}" />
 
 	{% block pPageStylesheets %}
@@ -314,8 +325,11 @@
 		{% endblock %}
 		
 		<footer id="footer-wrapper">
-			{% block pPageFooter%}
-				<a href="http://www.combodo.com">iTop &copy; {{ "now"|date('Y') }}</a>
+			{% block pPageFooter %}
+				{#<a href="http://www.combodo.com">iTop &copy; {{ "now"|date('Y') }}</a>#}
+				{# MPETO-BEGIN #}
+				<a href="">Departamento de Modernização de TI</a>
+				{# MPETO-END #}
 			{% endblock %}
 		</footer>
 	
