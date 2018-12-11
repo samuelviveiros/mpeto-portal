@@ -34,7 +34,21 @@
 			{% if form.buttons is defined and form.buttons.transitions is defined and form.buttons.transitions|length > 0 %}
 				<div class="form_btn_transitions">
 				{% for sStimulusCode, sStimulusLabel in form.buttons.transitions %}
-					<button class="btn btn-primary form_btn_transition" type="submit" name="stimulus_code" value="{{ sStimulusCode }}">{{ sStimulusLabel }}</button>
+					
+					{# MPETO-BEGIN #}
+					{# Label do botão "Fechar esta solicitação" alterado para "Cancelar esta solicitação", 
+					   sendo que sua exibição se dará somente na tela de edição de chamado e quando o status 
+					   for "Aguardando atendimento" (new). Elimina o bug referente à exibição desse botão na 
+					   tela de criação de chamado. #}
+					{% if sStimulusCode == 'ev_close' %}
+						{% if 'objectform-ticket-edit' in sFormId and sFormObjectStateClass == 'form_object_state_new' %}
+							<button class="btn btn-primary form_btn_transition" type="submit" name="stimulus_code" value="{{ sStimulusCode }}">{{ sStimulusLabel }}</button>
+						{% endif %}
+					{% else %}
+						<button class="btn btn-primary form_btn_transition" type="submit" name="stimulus_code" value="{{ sStimulusCode }}">{{ sStimulusLabel }}</button>
+					{% endif %}
+					{# MPETO-END #}
+
 				{% endfor %}
 				</div>
 			{% endif %}
@@ -45,12 +59,22 @@
 						<span class="glyphicon glyphicon-remove"></span>
 						{{ 'Portal:Button:Cancel'|dict_s }}
 					</button>
+
+					{# MPETO-BEGIN #}
+					{# Força a exibição do botão Salvar, retraduzido para Criar, na tela de criação de chamado. #}
 					{% if form.buttons.submit is defined %}
 						<button class="btn btn-primary form_btn_submit" type="submit" value="submit" title="{{ form.buttons.submit.label }}">
 							<span class="glyphicon glyphicon-ok"></span>
 							{{ form.buttons.submit.label }}
 						</button>
+					{% elseif 'objectform-ticket-create' in sFormId %}
+						<button class="btn btn-primary form_btn_submit" type="submit" value="submit" title="{{ form.buttons.submit.label }}">
+							<span class="glyphicon glyphicon-ok"></span>
+							{{ 'Portal:Button:CreateRequest'|dict_s }}
+						</button>
 					{% endif %}
+					{# MPETO-END #}
+
 				{% else %}
 					{# Modal mode #}
 					{% if tIsModal %}
