@@ -232,6 +232,17 @@
 						<field id="description"/>
 						<field id="solution"/>
 					</fields>
+					<grouping>
+						<tabs>
+							<groups>
+								<group id="all">
+									<rank>1</rank>
+									<title>Brick:Portal:ClosedRequests:Title</title>
+									<condition><![CDATA[SELECT Ticket]]></condition>
+								</group>
+							</groups>
+						</tabs>
+					</grouping>
 					<data_loading>auto</data_loading>
 				</brick>
 
